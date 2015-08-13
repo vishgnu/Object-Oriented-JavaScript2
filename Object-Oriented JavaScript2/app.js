@@ -170,3 +170,54 @@ console.log(Car.prototype.constructor);
 // amy contructor fallthrough to Car.prototype.constructor
 console.log(amy.constructor);
 
+
+
+//******************************************************************************************
+//******************************************************************************************
+//******************************************************************************************
+//******************************************************************************************
+//******************************************************************************************
+
+
+// supers and superclasses with pesudoclassical
+
+var Car = function (loc) {
+	this.loc = loc;
+};
+
+// store methods for prototype
+Car.prototype.move = function () {
+	this.loc++;
+};
+
+var Van = function (loc, free) {
+	// call base class contructor
+	Car.call(this, loc);
+	this.free = free;
+};
+
+// wire up method fallthrough to car
+Van.prototype = Object.create(Car.prototype);
+Van.prototype.constructor = Van;
+
+// add methods to van
+Van.prototype.grab = function () {
+	if (this.free) {
+		this.free = false;
+		return true;
+	}
+	else {
+		return false;
+	}	
+}
+
+
+
+var zed = new Car(1);
+zed.move();
+var amy = new Van(9);
+amy.move();
+amy.grab();
+
+console.log(ben.loc);
+console.log(amy.loc);
